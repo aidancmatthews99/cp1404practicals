@@ -6,6 +6,10 @@ Broken program to determine score status
 
 def main():
     score = receive_score()
+    check_score(score)
+
+
+def check_score(score):
     if score < 0 or score > 100:
         print("Invalid score")
     elif 90 > score >= 50:
