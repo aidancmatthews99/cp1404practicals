@@ -1,0 +1,24 @@
+
+BoxLayout
+    orientation: 'vertical'
+    BoxLayout:
+        orientation: 'horizontal'
+        TextInput:
+            text: '5'
+            id: input_label
+            on_text: app.handle_convert(input_label.text)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.25
+            Button:
+                text: 'Up'
+                on_press: app.handle_increment(1, input_label.text)
+            Button:
+                text: 'Down'
+                on_press: app.handle_increment(-1, input_label.text)
+#    Button:
+#        text: 'Convert to Kilometres'
+#        on_press: app.handle_convert(input_label.text)
+    Label:
+        id: output_label
+        text: '30.5658'
