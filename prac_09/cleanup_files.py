@@ -30,13 +30,23 @@ def main():
         new_name = get_fixed_filename(filename)
         print("Renaming {} to {}".format(filename, new_name))
 
-        os.rename(filename, new_name)
-        shutil.move(filename, 'temp/' + new_name)
+        # os.rename(filename, new_name)
+        # shutil.move(filename, 'temp/' + new_name)
 
 
 def get_fixed_filename(filename):
     """Return a 'fixed' version of filename."""
-    new_name = filename.replace(" ", "_").replace(".TXT", ".txt")
+    filename = filename.replace(" ", "_").replace(".TXT", ".txt")
+    new_name = ''
+    previous_letter = ''
+    for letter in filename:
+        if letter.isupper() and previous_letter != '_' and previous_letter != '':
+            new_name += '_'
+        if previous_letter == ' ' or previous_letter == '_' or previous_letter == '':
+            letter = letter.upper()
+
+        new_name += letter
+        previous_letter = letter
     return new_name
 
 
@@ -44,16 +54,18 @@ def demo_walk():
     """Process all subdirectories using os.walk()."""
     os.chdir('Lyrics')
     for directory_name, subdirectories, filenames in os.walk('.'):
+        for filename in filenames:
+            old_name_path = os.path.join(directory_name, filename)
+            new_name_path = os.path.join(directory_name, get_fixed_filename(filename))
+            os.rename(old_name_path, new_name_path)
+            print(get_fixed_filename(filename))
         print("Directory:", directory_name)
         print("\tContains subdirectories:", subdirectories)
         print("\tContains files:", filenames)
         print("(Current working directory is: {})".format(os.getcwd()))
 
-        for filename in filenames:
-            old_name_path = os.path.join(directory_name, filename)
-            new_name_path = os.path.join(directory_name, get_fixed_filename(filename))
-            os.rename(old_name_path, new_name_path)
 
 
 # main()
 demo_walk()
+# get_fixed_filename('AngelsWeHaveHeard.txt')
